@@ -1,67 +1,29 @@
 @Restaurants.API_HostAddress = https://localhost:7238
 
-GET {{Restaurants.API_HostAddress}}/weatherforecast/
-Accept: application/json
+
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants
 
 ###
 
-POST {{Restaurants.API_HostAddress}}/api/weatherforecast
-Content-Type: application/json
-
-"string"
+GET {{Restaurants.API_HostAddress}}/api/restaurants
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast/example
+GET {{Restaurants.API_HostAddress}}/{id}
 
 ###
 
-@max=0
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast/2/currentDay?max=3
+
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants/1
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast/5/minmmum/maxmum?min=-6&max=444
+GET {{Restaurants.API_HostAddress}}/api/restaurants/{id}
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast/{take}/currentDay?max={{max}}
-
-###
-
-@min=0
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast/5?min=-40&max=50
-
-###
-
-@reslutsNumber=6
-POST {{Restaurants.API_HostAddress}}/api/weatherforecast/genrate?reslutsNumber=-6
-Content-Type: application/json
-
-{
-  
-  "min" : -23,
-  "max": 23
-}
-
-###
-
-POST {{Restaurants.API_HostAddress}}/api/weatherforecast/genrate?reslutsNumber={{reslutsNumber}}
-Content-Type: application/json
-
-{
-  
-  "min" : -23,
-  "max": 23
-}
-
-###
-
-POST {{Restaurants.API_HostAddress}}/api/weatherforecast/genrate?reslutsNumber={{reslutsNumber}}
-Content-Type: application/json
-
-{
-  //TempreatureRange
-}
+GET {{Restaurants.API_HostAddress}}/api/restaurants/{id}
 
 ###
