@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Restaurants.API/Properties/launchSettings.json
+/Restaurants.API/appsettings.json
+/Restaurants.API/appsettings.Development.json
