@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants;
+using Restaurants.Application.Restaurants.Dtos;
 
 namespace Restaurants.API.Controllers;
 
@@ -20,7 +21,7 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
     {
         
         
-            var restaurant = await restaurantsService.GetRestaurantById(id);
+        var restaurant = await restaurantsService.GetRestaurantById(id);
         if (restaurant == null) 
         {
             return NotFound("Restaurant not found");
@@ -29,5 +30,13 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
         return Ok(restaurant);
         
         
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateRestaurant(CreateRestaurantDto createRestaurantDto)
+    {
+        int restaurantId = await restaurantsService.Create(createRestaurantDto);
+
+        return CreatedAtAction(nameof(GetById), new { Id = restaurantId },null);
     }
 }
