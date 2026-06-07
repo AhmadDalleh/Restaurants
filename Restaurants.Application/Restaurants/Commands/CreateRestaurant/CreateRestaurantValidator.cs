@@ -1,15 +1,13 @@
-﻿
-
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Restaurants.Application.Restaurants.Dtos;
 
-namespace Restaurants.Application.Validators;
+namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 
-public class CreateRestaurantValidator : AbstractValidator<CreateRestaurantDto>
+public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
 {
     private readonly List<string> validCategory = ["Italian", "Chinese", "Mexican", "Indian", "French", "Japanese", "Mediterranean", "Thai", "American", "Spanish"];
-    public CreateRestaurantValidator()
+    public CreateRestaurantCommandValidator()
     {
         RuleFor(x => x.Name)
             .Length(3, 100)

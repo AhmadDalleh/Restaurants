@@ -1,0 +1,25 @@
+@Restaurants.API_HostAddress = https://localhost:7238
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+  "name": "Pizza Place2",
+  "description": "Best pizza in town2",
+  "category": "Italian",
+  "hasDelivery": true,
+  "city": "New York2",
+  "street": "123 Main St2",
+  "postalCode": "11-111"
+}
+
+###
+
+@id=0
+GET {{Restaurants.API_HostAddress}}/api/restaurants/4
+
+###

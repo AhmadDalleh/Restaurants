@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
+using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Restaurants.Application.Restaurants.Dtos
                 .ForMember(d => d.Dishes, opt => opt.MapFrom(scr => scr.Dishes));
 
 
-            CreateMap<CreateRestaurantDto, Restaurant>()
+            CreateMap<CreateRestaurantCommand, Restaurant>()
                 .ForMember(d => d.Address, opt => opt.MapFrom(
                     src => new Address
                     {
