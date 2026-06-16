@@ -32,7 +32,7 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
         //}
         public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handling UpdateRestaurantCommand for Restaurant Id: {RestaurantId}", request.Id);
+            logger.LogInformation("Updating Restaurant with Id : {RestaurantId} with {@UpdateRestaurant}", request.Id,request);
             var restaurant = await restaurantRepository.GetRestaurantByIdAsync(request.Id);
 
             if (restaurant is null)

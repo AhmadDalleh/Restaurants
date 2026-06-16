@@ -28,7 +28,7 @@ DELETE {{Restaurants.API_HostAddress}}/api/restaurants/4
 
 ###
 
-PATCH {{Restaurants.API_HostAddress}}/api/restaurants/2
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/7
 Content-Type: application/json
 
 {
@@ -36,6 +36,19 @@ Content-Type: application/json
   "description": "Best pizza in town3",
   "hasDelivery": true
   
+}
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants
+
+###
+
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/{id}
+Content-Type: application/json
+
+{
+  //UpdateRestaurantCommand
 }
 
 ###
