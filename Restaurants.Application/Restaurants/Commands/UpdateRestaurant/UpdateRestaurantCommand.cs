@@ -1,14 +1,19 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
 {
-    public class UpdateRestaurantCommand : IRequest<bool>
+    public class UpdateRestaurantCommand() : IRequest<bool>
     {
+
+        
+        [HiddenInput]
         public int Id { get; set; }
         public string Name { get; set; } = default!;
 

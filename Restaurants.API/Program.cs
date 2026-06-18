@@ -4,22 +4,22 @@ using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
 using Serilog;
 using Serilog.Events;
+using System.Runtime.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-
+builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Host.UseSerilog((context, configuration) =>
-configuration
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
-    .WriteTo.Console(outputTemplate: "[{Timestamp:dd--MM HH:mm:ss} {Level:u3}] |{SourceContext}|{Message:lj}{NewLine}{Exception}")
 
+builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration)
 );
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +28,12 @@ var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
 await seeder.Seed();
 
 app.UseSerilogRequestLogging();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
