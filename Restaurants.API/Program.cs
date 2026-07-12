@@ -33,7 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGroup("/api/identity").MapIdentityApi<User>();
+app.MapGroup("/api/identity")
+    .WithTags("Identity").MapIdentityApi<User>();
 
 app.UseHttpsRedirection();
 
