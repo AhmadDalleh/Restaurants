@@ -37,8 +37,8 @@ public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaura
             .Matches(@"^\+?[1-9]\d{1,14}$")
             .WithMessage("ContactPhone must be a valid phone number");
 
-        RuleFor(dto=>dto.PostalCode)
-            .Matches(@"^\d{2}(-\d{3})?$")
+        RuleFor(dto => dto.PostalCode)
+            .Matches(@"^\d{2}-?\d{3}$")
             .WithMessage("PostalCode must be in the format XX-XXX or XXXXX");
     }
 }
