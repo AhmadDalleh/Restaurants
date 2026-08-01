@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
+using Restaurants.Domain.Interfaces;
 using Restaurants.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,8 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
 {
     public class UpdateRestaurantCommandHandler(ILogger<UpdateRestaurantCommandHandler> logger,
         IRestaurantsRepository restaurantRepository,
-        IMapper mapper) : IRequestHandler<UpdateRestaurantCommand>//here it was int in my solution
+        IMapper mapper,
+        IRestaurantAuthorizationService restaurantAuthorizationService) : IRequestHandler<UpdateRestaurantCommand>//here it was int in my solution
     {
         //public async Task<int> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         //{
@@ -38,6 +41,9 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
 
             if (restaurant is null)
                 throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
+
+            if (!restaurantAuthorizationService.Authorize(restaurant, ResourceOperation.Update))
+                throw new ForbidException();
 
            mapper.Map(request, restaurant);
 

@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Dishes.Commands.CreateDish;
 using Restaurants.Application.Dishes.Commands.DeleteDishesFromRestaurantById;
 using Restaurants.Application.Dishes.Dtos;
 using Restaurants.Application.Dishes.Queries.GetDishByIdForRestaurant;
 using Restaurants.Application.Dishes.Queries.GetDishesForRestaurant;
+using Restaurants.Domain.Constants;
 using System.Collections;
 
 namespace Restaurants.API.Controllers;
@@ -15,6 +17,7 @@ namespace Restaurants.API.Controllers;
 public class DishesController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Owner)]
     public async Task<IActionResult> CreateDish([FromRoute] int restaurantId, CreateDishCommand command)
     {
         command.RestaurantId = restaurantId;
@@ -40,6 +43,8 @@ public class DishesController(IMediator mediator) : ControllerBase
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = UserRoles.Admin+","+UserRoles.Owner)]
+
     public async Task<IActionResult> DeleteDishesFromRestaurantById([FromRoute] int restaurantId) 
     {
         await mediator.Send(new DeleteDishesFromRestaurantByIdCommand(restaurantId));
