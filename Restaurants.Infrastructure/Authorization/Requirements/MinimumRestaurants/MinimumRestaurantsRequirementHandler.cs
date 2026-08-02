@@ -13,7 +13,7 @@ public class MinimumRestaurantsRequirementHandler(ILogger<MinimumRestaurantsRequ
 {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, MinimumRestaurantsRequirement requirement)
     {
-       `var user = userContext.GetCurrentUser();
+       var user = userContext.GetCurrentUser();
         if(user == null)
         {
             throw new ForbidException();
