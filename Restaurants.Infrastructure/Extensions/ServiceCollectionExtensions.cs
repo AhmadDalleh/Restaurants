@@ -8,7 +8,9 @@ using Restaurants.Domain.Interfaces;
 using Restaurants.Domain.Repositories;
 using Restaurants.Infrastructure.Authorization;
 using Restaurants.Infrastructure.Authorization.Constants;
-using Restaurants.Infrastructure.Authorization.Requirements;
+using Restaurants.Infrastructure.Authorization.Requirements.AtLeastTowRestaurants;
+using Restaurants.Infrastructure.Authorization.Requirements.MinimumAge;
+using Restaurants.Infrastructure.Authorization.Requirements.MinimumRestaurants;
 using Restaurants.Infrastructure.Authorization.Services;
 using Restaurants.Infrastructure.Persistence;
 using Restaurants.Infrastructure.Repositories;
@@ -36,9 +38,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IDishesRepository, DishesRepository>();
         services.AddAuthorizationBuilder()
             .AddPolicy(PolicyNames.HasNationality, builder => builder.RequireClaim(ClaimsTypes.Nationality, "Syria", "Palestine"))
-            .AddPolicy(PolicyNames.AtLeast20, builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
+            .AddPolicy(PolicyNames.AtLeast20, builder => builder.AddRequirements(new MinimumAgeRequirement(20)))
+            .AddPolicy(PolicyNames.AtLeastTowRestaurants, builder => builder.AddRequirements(new MinimumRestaurantsRequirement(2)));
 
         services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
         services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
+        services.AddScoped<IAuthorizationHandler, MinimumRestaurantsRequirementHandler>();
     }
 }

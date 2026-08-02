@@ -31,7 +31,15 @@ namespace Restaurants.Infrastructure.Repositories
             return restaurants;
         }
 
-        public async Task<Restaurant> GetRestaurantByIdAsync(int id)
+        public async Task<IEnumerable<Restaurant>> GetAllRestaurantsByUserIdAsync(string userId) 
+        {
+            var restaurants = await dbContext.Restaurants
+                .Where(r => r.OwnerId == userId)
+                .ToListAsync();
+            return restaurants;
+        }
+
+        public async Task<Restaurant?> GetRestaurantByIdAsync(int id)
         {
             var restaurant = await dbContext.Restaurants
                 .Include(r=>r.Dishes)

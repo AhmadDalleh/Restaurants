@@ -20,6 +20,8 @@
     public class RestaurantsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
+        [Authorize]
+        [Authorize(Policy = PolicyNames.AtLeastTowRestaurants)]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetALl()
         {
             var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
