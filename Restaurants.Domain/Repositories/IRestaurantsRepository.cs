@@ -19,5 +19,7 @@ namespace Restaurants.Domain.Repositories
         //Task<int> UpdateRestaurantAsync(Restaurant restaurant);
 
         Task SaveChangesAsync();
+
+        Task<IEnumerable<Restaurant>> GetAllMatchesRestaurants(string? searchPhrase);
     }
 }
