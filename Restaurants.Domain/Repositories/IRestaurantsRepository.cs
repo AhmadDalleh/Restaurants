@@ -20,6 +20,6 @@ namespace Restaurants.Domain.Repositories
 
         Task SaveChangesAsync();
 
-        Task<IEnumerable<Restaurant>> GetAllMatchesRestaurants(string? searchPhrase);
+        Task<(IEnumerable<Restaurant>,int)> GetAllMatchesRestaurants(string? searchPhrase,int pageNumber,int pageSize);
     }
 }
