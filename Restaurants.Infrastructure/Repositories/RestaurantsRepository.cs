@@ -37,7 +37,10 @@ namespace Restaurants.Infrastructure.Repositories
             
             var totalCount = await query.CountAsync();
 
-            var restaurants = await query.Skip(pageNumber * (pageSize - 1)).Take(pageSize).ToListAsync();
+            var restaurants = await query
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
 
             return (restaurants,totalCount);
         }
