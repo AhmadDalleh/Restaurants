@@ -1,4 +1,5 @@
-﻿using Restaurants.Domain.Entities;
+﻿using Restaurants.Domain.Constants;
+using Restaurants.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,6 @@ namespace Restaurants.Domain.Repositories
 
         Task SaveChangesAsync();
 
-        Task<(IEnumerable<Restaurant>,int)> GetAllMatchesRestaurants(string? searchPhrase,int pageNumber,int pageSize);
+        Task<(IEnumerable<Restaurant>,int)> GetAllMatchesRestaurants(string? searchPhrase,int pageNumber,int pageSize,string? sortBy,SortDirection sortDirection);
     }
 }

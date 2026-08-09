@@ -1,10 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Restaurants.Application.Restaurants.Dtos;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 using Restaurants.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +29,7 @@ namespace Restaurants.Infrastructure.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<(IEnumerable<Restaurant>,int)> GetAllMatchesRestaurants(string? searchPhrase,int pageNumber,int pageSize)
+        public async Task<(IEnumerable<Restaurant>,int)> GetAllMatchesRestaurants(string? searchPhrase,int pageNumber,int pageSize,string? sortBy,SortDirection sortDirection)
         {
             searchPhrase = searchPhrase?.ToLower();
 
@@ -36,7 +40,20 @@ namespace Restaurants.Infrastructure.Repositories
                 r.Category.ToLower().Contains(searchPhrase));
             
             var totalCount = await query.CountAsync();
+            if (sortBy!=null)
+            {
+                var columnsSelectors = new Dictionary<string, Expression<Func<Restaurant, object>>>()
+                {
+                    { nameof(RestaurantDto.Description),r => r.Description},
+                    { nameof(RestaurantDto.Category),r => r.Category},
+                    { nameof(RestaurantDto.HasDelivery),r => r.HasDelivery}
+                };
+                var selectedColumn = columnsSelectors[sortBy];
 
+                query = sortDirection == SortDirection.Ascending 
+                    ? query.OrderBy(selectedColumn)
+                    :query.OrderByDescending(selectedColumn);
+            }
             var restaurants = await query
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
